@@ -2,8 +2,6 @@ import express, { Express } from 'express';
 import helmet from 'helmet';
 import logger from './config/helpers/logger';
 import RequestLoggerHandler from './config/middlewares/requestLogger';
-import notFound from './config/middlewares/notFound';
-import errorHandler from './config/middlewares/errorHandler';
 
 const {
   APP_PORT,
@@ -32,8 +30,6 @@ class App {
     this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(RequestLoggerHandler);
-    this.app.use(notFound);
-    this.app.use(errorHandler);
   }
 
   public listen() {
