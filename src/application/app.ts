@@ -1,23 +1,28 @@
 import express, { Express } from 'express';
 import helmet from 'helmet';
-import logger from './config/helpers/logger';
-import RequestLoggerHandler from './config/middlewares/requestLogger';
+import logger from '../config/helpers/logger';
+import RequestLoggerHandler from '../config/middlewares/requestLogger';
+import envVars from '../config/envVars';
+import IController from './controllers/controller.intreface';
 
 const {
   APP_PORT,
-} = process.env;
+} = envVars.application;
 
 class App {
   private readonly app: Express;
 
   private readonly port: number;
 
-  constructor() {
+  constructor(appInit: {
+    controllers: Array<IController>;
+  }) {
     this.app = express();
     this.port = Number(APP_PORT) || 5000;
 
     this.setupHealthCheck();
     this.setupMiddlewares();
+    this.routes(appInit.controllers);
   }
 
   private setupHealthCheck() {
@@ -30,6 +35,10 @@ class App {
     this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(RequestLoggerHandler);
+  }
+
+  private routes(controllers: Array<IController>) {
+    controllers.forEach((controller) => this.app.use('/', controller.getRoutes()));
   }
 
   public listen() {

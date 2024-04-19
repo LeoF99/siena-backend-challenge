@@ -1,8 +1,10 @@
-import dotenv from 'dotenv';
-import App from './app';
+import AppFactory from './config/factories/app.factory';
+import FileUploadFactory from './config/factories/fileUpload/fileUpload.factory';
 
-dotenv.config();
+const controllers = [
+  FileUploadFactory.factory(),
+];
 
-const app = new App();
+const app = AppFactory.factory(controllers);
 
 app.listen();
