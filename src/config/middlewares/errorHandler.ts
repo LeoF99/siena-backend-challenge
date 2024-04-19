@@ -1,17 +1,15 @@
-import {
-  Request, Response, NextFunction,
-} from 'express';
+import { NextFunction, Request, Response } from 'express';
+import logger from '../helpers/logger';
 
-const errorHandler = (
-  err: Error,
-  req: Request,
-  res: Response,
-) => {
-  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
-  res.status(statusCode);
-  res.json({
-    message: err.message,
-  });
+export default (controllerFn: any) => async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await controllerFn(req, res, next);
+  } catch (error: any) {
+    logger.error('Something went wrong', {
+      message: error.message,
+      stack: error.stack,
+    });
+
+    next(error);
+  }
 };
-
-export default errorHandler;

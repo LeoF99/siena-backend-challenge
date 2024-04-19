@@ -1,13 +1,13 @@
 {
-  "name": "node-typescript-api-template",
+  "name": "siena-backend-challenge",
   "version": "1.0.0",
-  "description": " A basic template for an express.js API",
+  "description": "Siena's challenge for the Senior Backend Engineer position",
   "main": "server.js",
   "license": "MIT",
-  "author": "Leo Ferreira <leo.ferreira@dcx.ufpb.br>",
+  "author": "Leo Ferreira <lleofferreirassantanassilva@gmail.com>",
   "scripts": {
     "dev": "ts-node-dev -T src/server.ts",
-    "start": "ts-node dist/src/server.js",
+    "start": "yarn build && ts-node dist/src/server.js",
     "build": "yarn run clean; tsc -p .",
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts",
@@ -17,6 +17,7 @@
     "test:unit:watch": "yarn run test:unit --watch"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.556.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "helmet": "^5.1.0",
