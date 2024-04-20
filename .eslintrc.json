@@ -26,6 +26,7 @@
       "import/extensions": "off",
       "import/no-unresolved": "off",
       "consistent-return": "off",
-      "no-undef": "off"
+      "no-undef": "off",
+      "no-shadow": "off"
     }
 }

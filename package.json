@@ -12,7 +12,7 @@
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts",
     "test": "yarn run test:unit",
-    "test:unit": "jest --config ./jest/jest.config.js --coverage --detectOpenHandles --runInBand",
+    "test:unit": "jest --config ./jest/jest.config.js --runInBand",
     "test:unit:watch": "yarn run test:unit --watch"
   },
   "dependencies": {

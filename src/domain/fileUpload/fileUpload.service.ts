@@ -4,6 +4,14 @@ import stringToCsv from '../../helpers/parseCsv/stringToCsv';
 import envVars from '../../config/envVars';
 import BusinessException from '../../exceptions/businessException';
 
+const channelRowName = 'channel';
+enum CsvChannels {
+  instagram,
+  facebook,
+  whatsapp,
+  email
+}
+
 class FileUploadService {
   private readonly s3Provider: S3Provider;
 
@@ -17,7 +25,7 @@ class FileUploadService {
     await this.s3Provider.uploadFile(file, filename);
   }
 
-  private validateCsvFile(file: Express.Multer.File) {
+  validateCsvFile(file: Express.Multer.File) {
     const csvString = file.buffer.toString('utf-8');
     const csvData = stringToCsv(csvString);
 
@@ -26,6 +34,14 @@ class FileUploadService {
         `Please provide a CSV file with at least ${envVars.application.CSV_MINIMUM_SIZE} rows.`,
       );
     }
+
+    csvData.forEach((row) => {
+      if (!row[channelRowName] || !(row[channelRowName] in CsvChannels)) {
+        throw new BusinessException(
+          'Invalid CSV file. Please provide a CSV file with valid channels.',
+        );
+      }
+    });
   }
 }
 
