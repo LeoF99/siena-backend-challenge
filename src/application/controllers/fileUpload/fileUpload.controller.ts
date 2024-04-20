@@ -5,8 +5,12 @@ import multer, { Multer, memoryStorage } from 'multer';
 import IController from '../controller.intreface';
 import errorHandler from '../../../config/middlewares/errorHandler';
 import FileUploadService from '../../../domain/fileUpload/fileUpload.service';
+import csvFileValidator from '../../../helpers/validateCsvFile';
 
-const upload: Multer = multer({ storage: memoryStorage() });
+const upload: Multer = multer({
+  storage: memoryStorage(),
+  fileFilter: csvFileValidator,
+});
 
 class FileUploadController implements IController {
   private router: Router = express.Router();
@@ -41,7 +45,7 @@ class FileUploadController implements IController {
     }
 
     res.status(400).json({
-      error: 'No file uploaded.',
+      error: 'No file provided or invalid file format. Please provide a valid CSV file.',
     });
   }
 }
