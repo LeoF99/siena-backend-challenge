@@ -1,9 +1,12 @@
 import App from '../../application/app';
 import IController from '../../application/controllers/controller.intreface';
+import DatabaseProvider from '../../infrastructure/database/databaseProvider';
 
 class AppFactory {
   static factory(controllers: Array<IController>) {
-    return new App({ controllers });
+    const databaseProvider = new DatabaseProvider();
+
+    return new App({ controllers, databaseProvider });
   }
 }
 

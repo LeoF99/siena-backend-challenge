@@ -4,6 +4,7 @@ import logger from '../config/helpers/logger';
 import RequestLoggerHandler from '../config/middlewares/requestLogger';
 import envVars from '../config/envVars';
 import IController from './controllers/controller.intreface';
+import DatabaseProvider from '../infrastructure/database/databaseProvider';
 
 const {
   APP_PORT,
@@ -16,12 +17,14 @@ class App {
 
   constructor(appInit: {
     controllers: Array<IController>;
+    databaseProvider: DatabaseProvider;
   }) {
     this.app = express();
     this.port = Number(APP_PORT) || 5000;
 
     this.setupHealthCheck();
     this.setupMiddlewares();
+    this.setupDatabase(appInit.databaseProvider);
     this.routes(appInit.controllers);
   }
 
@@ -39,6 +42,10 @@ class App {
 
   private routes(controllers: Array<IController>) {
     controllers.forEach((controller) => this.app.use('/', controller.getRoutes()));
+  }
+
+  private async setupDatabase(databaseProvider: DatabaseProvider) {
+    await databaseProvider.connect();
   }
 
   public listen() {

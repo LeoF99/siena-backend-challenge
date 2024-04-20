@@ -15,6 +15,17 @@ const envVars = {
     AWS_REGION: env.AWS_REGION || 'us-east-1',
     AWS_S3_HOST: env.AWS_S3_HOST || '',
   },
+  db: {
+    TYPEORM_CONNECTION: env.TYPEORM_CONNECTION || 'postgres',
+    TYPEORM_HOST: env.TYPEORM_HOST || 'localhost',
+    TYPEORM_PORT: Number(env.TYPEORM_PORT) || 5432,
+    TYPEORM_USERNAME: env.TYPEORM_USERNAME || 'test',
+    TYPEORM_PASSWORD: env.TYPEORM_PASSWORD || 'test',
+    TYPEORM_DATABASE: env.TYPEORM_DATABASE || 'test',
+    TYPEORM_SYNCHRONIZE: env.TYPEORM_SYNCHRONIZE === 'true',
+    TYPEORM_LOGGING: env.TYPEORM_LOGGING === 'true',
+    TYPEORM_ENTITIES: env.TYPEORM_ENTITIES || 'src/infrastructure/database/**/*.entity.ts',
+  },
 };
 
 export default envVars;
