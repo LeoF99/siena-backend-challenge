@@ -128,9 +128,11 @@ Input examples
 
 Using the prompts
 1. how are you doing?
+
 ![Prompt example 1](./assets/screenshots/Screenshot%20from%202024-04-20%2017-08-41.png)
 
 2. do you ship internationally?
+
 ![Prompt example 2](./assets/screenshots/Screenshot%20from%202024-04-20%2017-24-58.png)
 
 
