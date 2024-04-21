@@ -2,23 +2,23 @@ import {
   Entity, Column, PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity()
-class Intents {
+@Entity({ name: 'intents' })
+class IntentsEntity {
   @PrimaryGeneratedColumn('uuid')
-    id!: string;
+  protected readonly id!: string;
 
   @Column({
     type: 'text',
   })
-    intent!: string;
+  protected readonly intent!: string;
 
   @Column({
     type: 'text',
   })
-    response!: string;
+  protected readonly response!: string;
 
   @Column()
-    channel!: string;
+  protected readonly channel!: string;
 }
 
-export default Intents;
+export default IntentsEntity;

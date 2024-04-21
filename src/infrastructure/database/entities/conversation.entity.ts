@@ -1,31 +1,53 @@
 import {
   Entity, Column, PrimaryGeneratedColumn,
 } from 'typeorm';
+import Conversations from '../../../domain/conversations/entities/conversations';
 
-@Entity()
-class Conversations {
+@Entity({ name: 'conversations' })
+class ConversationsEntity {
   @PrimaryGeneratedColumn('uuid')
-    id!: string;
+  protected readonly id!: string;
 
   @Column({
     type: 'text',
   })
-    message!: string;
+  protected readonly message!: string;
 
   @Column({
     type: 'text',
   })
-    response!: string;
+  protected readonly response!: string;
 
   @Column({
     name: 'sender_username',
   })
-    senderUsername!: string;
+  protected readonly senderUsername!: string;
 
   @Column({
     name: 'reciever_username',
   })
-    recieverUsername!: string;
+  protected readonly recieverUsername!: string;
+
+  constructor(
+    message: string,
+    response: string,
+    senderUsername: string,
+    recieverUsername: string,
+  ) {
+    this.message = message;
+    this.response = response;
+    this.senderUsername = senderUsername;
+    this.recieverUsername = recieverUsername;
+  }
+
+  static fromDomain(conversation: Conversations): ConversationsEntity {
+    return new ConversationsEntity(
+      conversation.message,
+      conversation.response,
+      conversation.senderUsername,
+      conversation.recieverUsername,
+    );
+  }
 }
 
-export default Conversations;
+export default ConversationsEntity;
