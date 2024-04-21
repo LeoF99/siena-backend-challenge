@@ -15,8 +15,10 @@ describe('FileUploadService', () => {
   beforeEach(() => {
     envVars.application.CSV_MINIMUM_SIZE = 1;
     s3Provider = new S3Provider();
-    messageBrokerProvider = new MessageBrokerProvider();
-    messagesService = new MessagesService(s3Provider);
+    messageBrokerProvider = {
+      publishToQueue: jest.fn(),
+    } as unknown as MessageBrokerProvider;
+    messagesService = new MessagesService(s3Provider, {} as any, {} as any);
     fileUploadService = new FileUploadService(
       s3Provider,
       messageBrokerProvider,
