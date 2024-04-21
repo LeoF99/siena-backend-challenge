@@ -1,6 +1,7 @@
 import logger from '../../config/helpers/logger';
 import ConversationsRepository from '../../infrastructure/repositories/conversations.repository';
 import Conversations from './entities/conversations';
+import Message from './types/message.type';
 
 class ConversationsService {
   constructor(
@@ -36,6 +37,23 @@ class ConversationsService {
       );
     } catch (error: any) {
       logger.error('Failed to find conversations', {
+        message: error.message,
+      });
+
+      throw error;
+    }
+  }
+
+  async getMessagesById(id: string): Promise<Message> {
+    try {
+      const conversations = await this.conversationsRepository.getById(id);
+
+      return {
+        sender: [conversations.message],
+        reciever: conversations.response.split('\n'),
+      };
+    } catch (error: any) {
+      logger.error('Failed to get conversation', {
         message: error.message,
       });
 

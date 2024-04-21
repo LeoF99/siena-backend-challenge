@@ -29,6 +29,12 @@ class ConversationsRepository {
 
     return data.map((entity) => entity.toDomain(entity));
   }
+
+  async getById(id: string): Promise<Conversations> {
+    const data = await this.repository.findOneOrFail({ where: { id } });
+
+    return data.toDomain(data);
+  }
 }
 
 export default ConversationsRepository;

@@ -1,4 +1,5 @@
 import express, { Router, Request, Response } from 'express';
+import { validate } from 'uuid';
 import IController from '../controller.intreface';
 import ConversationsService from '../../../domain/conversations/conversations.service';
 import errorHandler from '../../../config/middlewares/errorHandler';
@@ -15,6 +16,11 @@ class ConversationsController implements IController {
     this.router.get(
       '/conversation',
       errorHandler(this.find.bind(this)),
+    );
+
+    this.router.get(
+      '/conversation/:id/message',
+      errorHandler(this.getMessagesById.bind(this)),
     );
   }
 
@@ -33,6 +39,22 @@ class ConversationsController implements IController {
     });
 
     res.status(200).json(conversations);
+  }
+
+  async getMessagesById(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+
+    if (!validate(id)) {
+      res.status(400).json({
+        error: 'Invalid conversation id. Please provide a valid UUID',
+      });
+
+      return;
+    }
+
+    const messages = await this.conversationsService.getMessagesById(id);
+
+    res.status(200).json(messages);
   }
 }
 
