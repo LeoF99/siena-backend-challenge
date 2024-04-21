@@ -1,24 +1,34 @@
 import {
   Entity, Column, PrimaryGeneratedColumn,
 } from 'typeorm';
+import Intents from '../../../domain/messages/entities/intents';
 
 @Entity({ name: 'intents' })
 class IntentsEntity {
   @PrimaryGeneratedColumn('uuid')
-  protected readonly id!: string;
+  readonly id!: string;
 
   @Column({
     type: 'text',
   })
-  protected readonly intent!: string;
+  readonly intent!: string;
 
   @Column({
     type: 'text',
   })
-  protected readonly response!: string;
+  readonly response!: string;
 
   @Column()
-  protected readonly channel!: string;
+  readonly channel!: string;
+
+  toDomain(entity: IntentsEntity): Intents {
+    return new Intents({
+      id: entity.id,
+      intent: entity.intent,
+      response: entity.response,
+      channel: entity.channel,
+    });
+  }
 }
 
 export default IntentsEntity;

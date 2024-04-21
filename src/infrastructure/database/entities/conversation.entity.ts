@@ -6,27 +6,27 @@ import Conversations from '../../../domain/conversations/entities/conversations'
 @Entity({ name: 'conversations' })
 class ConversationsEntity {
   @PrimaryGeneratedColumn('uuid')
-  protected readonly id!: string;
+  readonly id!: string;
 
   @Column({
     type: 'text',
   })
-  protected readonly message!: string;
+  readonly message!: string;
 
   @Column({
     type: 'text',
   })
-  protected readonly response!: string;
+  readonly response!: string;
 
   @Column({
     name: 'sender_username',
   })
-  protected readonly senderUsername!: string;
+  readonly senderUsername!: string;
 
   @Column({
     name: 'reciever_username',
   })
-  protected readonly recieverUsername!: string;
+  readonly recieverUsername!: string;
 
   constructor(
     message: string,
