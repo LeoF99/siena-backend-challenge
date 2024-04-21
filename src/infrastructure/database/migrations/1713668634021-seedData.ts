@@ -56,9 +56,20 @@ export class SeedData1713668634021 implements MigrationInterface {
         'whatsapp'
       );
     `);
+
+    await queryRunner.query(`
+      CREATE TABLE conversations (
+        id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+        message varchar(255) NOT NULL,
+        response varchar(255) NOT NULL,
+        sender_username varchar(255) NOT NULL,
+        reciever_username varchar(255) NOT NULL
+      )
+    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('DELETE FROM intents;');
+    await queryRunner.query('DROP TABLE intents');
+    await queryRunner.query('DROP TABLE conversations');
   }
 }
