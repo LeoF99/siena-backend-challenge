@@ -17,6 +17,18 @@ class ConversationsRepository {
 
     return savedItems.map((entity) => entity.toDomain(entity));
   }
+
+  async find(
+    skip: number,
+    limit: number,
+  ): Promise<Conversations[]> {
+    const data = await this.repository.find({
+      skip,
+      take: limit,
+    });
+
+    return data.map((entity) => entity.toDomain(entity));
+  }
 }
 
 export default ConversationsRepository;

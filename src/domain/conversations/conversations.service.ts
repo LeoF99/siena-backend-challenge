@@ -22,6 +22,26 @@ class ConversationsService {
       throw error;
     }
   }
+
+  async find(
+    args: {
+      skip: number;
+      limit: number;
+    },
+  ): Promise<Conversations[]> {
+    try {
+      return this.conversationsRepository.find(
+        args.skip,
+        args.limit,
+      );
+    } catch (error: any) {
+      logger.error('Failed to find conversations', {
+        message: error.message,
+      });
+
+      throw error;
+    }
+  }
 }
 
 export default ConversationsService;
