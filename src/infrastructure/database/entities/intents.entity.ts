@@ -13,6 +13,11 @@ class Intents {
   })
     intent!: string;
 
+  @Column({
+    type: 'text',
+  })
+    response!: string;
+
   @ManyToOne(() => Messages, (message) => message.intents)
     message!: Messages;
 }
