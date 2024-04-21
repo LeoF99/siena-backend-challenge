@@ -1,5 +1,6 @@
 import {
   S3Client, ListBucketsCommand, CreateBucketCommand, PutObjectCommand,
+  GetObjectCommand,
 } from '@aws-sdk/client-s3';
 import { Express } from 'express';
 import envVars from '../../../config/envVars';
@@ -16,6 +17,27 @@ class S3Provider {
     });
 
     this.setupBucket();
+  }
+
+  async downloadFile(filename: string): Promise<ReadableStream> {
+    const command = new GetObjectCommand({
+      Bucket: envVars.aws.AWS_S3_BUCKET,
+      Key: filename,
+    });
+
+    try {
+      const response = await this.client.send(command);
+
+      logger.info(`File ${filename} downloaded successfully.`);
+
+      return response.Body as ReadableStream;
+    } catch (error: any) {
+      logger.error('Failed to download file:', {
+        message: error.message,
+      });
+
+      throw error;
+    }
   }
 
   async uploadFile(file: Express.Multer.File, filename: string): Promise<void> {

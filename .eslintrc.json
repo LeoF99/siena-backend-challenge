@@ -27,6 +27,8 @@
       "import/no-unresolved": "off",
       "consistent-return": "off",
       "no-undef": "off",
-      "no-shadow": "off"
+      "no-shadow": "off",
+      "no-useless-constructor": "off",
+      "no-empty-function": "off"
     }
 }

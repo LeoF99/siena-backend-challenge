@@ -3,6 +3,8 @@ import S3Provider from '../../infrastructure/aws/s3Provider/s3Provider';
 import stringToCsv from '../../helpers/parseCsv/stringToCsv';
 import envVars from '../../config/envVars';
 import BusinessException from '../../exceptions/businessException';
+import MessageBrokerProvider from '../../infrastructure/messageBroker/messageBrokerProvider';
+import MessagesService from '../messages/messages.service';
 
 const channelRowName = 'channel';
 enum CsvChannels {
@@ -13,16 +15,22 @@ enum CsvChannels {
 }
 
 class FileUploadService {
-  private readonly s3Provider: S3Provider;
-
-  constructor(s3Provider: S3Provider) {
-    this.s3Provider = s3Provider;
-  }
+  constructor(
+    private readonly s3Provider: S3Provider,
+    private readonly messageBrokerProvider: MessageBrokerProvider,
+    private readonly messagesService: MessagesService,
+  ) {}
 
   async uploadFile(file: Express.Multer.File, filename: string): Promise<void> {
     this.validateCsvFile(file);
 
     await this.s3Provider.uploadFile(file, filename);
+
+    await this.messageBrokerProvider.publishToQueue(
+      'some-queue',
+      { fileKey: filename },
+      this.messagesService.processMessages.bind(this.messagesService),
+    );
   }
 
   validateCsvFile(file: Express.Multer.File) {
