@@ -48,6 +48,16 @@ class ConversationsEntity {
       conversation.recieverUsername,
     );
   }
+
+  toDomain(entity: ConversationsEntity): Conversations {
+    return new Conversations({
+      id: entity.id,
+      message: entity.message,
+      response: entity.response,
+      senderUsername: entity.senderUsername,
+      recieverUsername: entity.recieverUsername,
+    });
+  }
 }
 
 export default ConversationsEntity;
