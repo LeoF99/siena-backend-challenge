@@ -10,10 +10,12 @@ class ConversationsRepository {
     this.repository = dataSource.getRepository(ConversationsEntity);
   }
 
-  async save(conversations: Conversations[]): Promise<ConversationsEntity[]> {
+  async save(conversations: Conversations[]): Promise<Conversations[]> {
     const data = conversations.map((conversation) => ConversationsEntity.fromDomain(conversation));
 
-    return this.repository.save(data);
+    const savedItems = await this.repository.save(data);
+
+    return savedItems.map((entity) => entity.toDomain(entity));
   }
 }
 
