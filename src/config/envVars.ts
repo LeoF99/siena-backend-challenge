@@ -25,6 +25,7 @@ const envVars = {
     TYPEORM_SYNCHRONIZE: env.TYPEORM_SYNCHRONIZE === 'true',
     TYPEORM_LOGGING: env.TYPEORM_LOGGING === 'true',
     TYPEORM_ENTITIES: env.TYPEORM_ENTITIES || 'src/infrastructure/database/**/*.entity.ts',
+    TYPEORM_MIGRATIONS: env.TYPEORM_MIGRATIONS || 'src/infrastructure/database/migrations/*.ts',
   },
 };
 

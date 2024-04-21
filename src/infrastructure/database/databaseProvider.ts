@@ -1,12 +1,12 @@
 import { DataSource } from 'typeorm';
-import config from './config';
+import dataSource from './dataSource';
 import logger from '../../config/helpers/logger';
 
 class DatabaseProvider {
   private readonly client: DataSource;
 
   constructor() {
-    this.client = new DataSource(config);
+    this.client = dataSource;
   }
 
   async connect(): Promise<void> {

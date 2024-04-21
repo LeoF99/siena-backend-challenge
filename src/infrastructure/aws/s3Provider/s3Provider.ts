@@ -3,6 +3,7 @@ import {
   GetObjectCommand,
 } from '@aws-sdk/client-s3';
 import { Express } from 'express';
+import { Readable } from 'stream';
 import envVars from '../../../config/envVars';
 import logger from '../../../config/helpers/logger';
 
@@ -19,7 +20,7 @@ class S3Provider {
     this.setupBucket();
   }
 
-  async downloadFile(filename: string): Promise<ReadableStream> {
+  async downloadFile(filename: string): Promise<Readable> {
     const command = new GetObjectCommand({
       Bucket: envVars.aws.AWS_S3_BUCKET,
       Key: filename,
@@ -30,7 +31,7 @@ class S3Provider {
 
       logger.info(`File ${filename} downloaded successfully.`);
 
-      return response.Body as ReadableStream;
+      return response.Body as Readable;
     } catch (error: any) {
       logger.error('Failed to download file:', {
         message: error.message,

@@ -1,7 +1,6 @@
 import {
-  Entity, Column, PrimaryGeneratedColumn, ManyToOne,
+  Entity, Column, PrimaryGeneratedColumn,
 } from 'typeorm';
-import Messages from './messages.entity';
 
 @Entity()
 class Intents {
@@ -18,8 +17,8 @@ class Intents {
   })
     response!: string;
 
-  @ManyToOne(() => Messages, (message) => message.intents)
-    message!: Messages;
+  @Column()
+    channel!: string;
 }
 
 export default Intents;

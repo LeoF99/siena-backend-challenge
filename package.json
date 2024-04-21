@@ -13,7 +13,9 @@
     "lint": "eslint . --ext .ts",
     "test": "yarn run test:unit",
     "test:unit": "jest --config ./jest/jest.config.js --runInBand",
-    "test:unit:watch": "yarn run test:unit --watch"
+    "test:unit:watch": "yarn run test:unit --watch",
+    "typeorm-cli": "ts-node ./node_modules/typeorm/cli",
+    "run-migrations": "yarn typeorm-cli migration:run -- -d src/infrastructure/database/dataSource.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.556.0",

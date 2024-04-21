@@ -1,3 +1,4 @@
+import { DataSourceOptions } from 'typeorm';
 import envVars from '../../config/envVars';
 
 export default {
@@ -11,4 +12,5 @@ export default {
   entities: [envVars.db.TYPEORM_ENTITIES],
   logging: envVars.db.TYPEORM_LOGGING,
   supportBigNumbers: true,
-};
+  migrations: [envVars.db.TYPEORM_MIGRATIONS],
+} as DataSourceOptions;
