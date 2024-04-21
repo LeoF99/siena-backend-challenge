@@ -4,6 +4,15 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 export class SeedData1713668634021 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
+      CREATE TABLE intents (
+        id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+        intent varchar(255) NOT NULL,
+        response varchar(255) NOT NULL,
+        channel varchar(255) NOT NULL
+      )
+    `);
+
+    await queryRunner.query(`
       INSERT INTO intents (intent, response, channel) VALUES
       (
         'General inquiry',
